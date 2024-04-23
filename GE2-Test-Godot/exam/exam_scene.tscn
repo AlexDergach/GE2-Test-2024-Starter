@@ -14,8 +14,13 @@ script = ExtResource("1_prfgg")
 
 [node name="creature_generator" type="Node3D" parent="."]
 script = ExtResource("2_jt2a0")
+length = 1
 
 [node name="Head" type="CSGBox3D" parent="creature_generator"]
+material = ExtResource("3_k1ckm")
+
+[node name="Body" type="CSGBox3D" parent="creature_generator"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
 material = ExtResource("3_k1ckm")
 
 [node name="Player" type="CharacterBody3D" parent="."]

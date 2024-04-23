@@ -44,6 +44,8 @@ func _process(delta):
 		
 		remove_child(body_len[length])
 	
+	if start_angle <= length:
+		body_len[start_angle]
 
 	on_draw_gizmos()
 	pass		
