@@ -10,7 +10,7 @@ extends Node3D
 @onready var head = $Head
 @onready var body = $Body
 
-
+var body_len
 
 func _ready():
 	if not Engine.is_editor_hint():		
@@ -21,12 +21,15 @@ func _ready():
 
 func on_draw_gizmos():
 	DebugDraw3D.draw_box(body.global_transform.origin, Quaternion.IDENTITY ,body.size, Color.WHITE)
+	DebugDraw3D.draw_box(head.global_transform.origin, Quaternion.IDENTITY ,head.size, Color.WHITE)
+	
+	for i in body_len.size():
+		DebugDraw3D.draw_box(body_len[i].global_transform.origin, Quaternion.IDENTITY ,body.size, Color.WHITE)
 
 func _process(delta):
-	var body_len = []
+	body_len = []
 	var body1
 	body_len.append(body)
-	
 	print(body_len.size())
 	
 	if body_len.size() < length + 1:
@@ -39,7 +42,7 @@ func _process(delta):
 	if body_len.size() > length + 1:
 		print(body_len.size())
 		
-		remove_child(body_len[1])
+		remove_child(body_len[length])
 	
 
 	on_draw_gizmos()
