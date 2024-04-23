@@ -1,6 +1,12 @@
+@tool
 class_name Root extends Node3D
 
 var custom_font:Font
+
+@onready var a = $"."
+@onready var target = $creature_generator
+
+@export var pause = false
 
 func _input(event):
 	if event is InputEventKey and event.pressed and event.keycode == KEY_F:
@@ -8,11 +14,24 @@ func _input(event):
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 		else:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
-
+			
+	if event is InputEventKey and event.keycode == KEY_P and event.pressed:
+		pause = ! pause
+	
+	if Input.is_action_just_pressed("Esc"):
+		get_tree().quit()
+		
 func on_draw_gizmos():
 	var size = 5000
 	var sub_divisions = size / 100
 	DebugDraw3D.draw_grid(Vector3.ZERO, Vector3.RIGHT* size, Vector3.BACK * size, Vector2(sub_divisions, sub_divisions), Color.WHITE)
+	
+	if target: 
+		
+		DebugDraw3D.draw_position(target.head.global_transform, Color.AQUAMARINE)
+		DebugDraw3D.draw_sphere(target.head.global_transform.origin, 1.5, Color.WEB_PURPLE)
+		DebugDraw3D.draw_sphere(target.head.global_transform.origin, 2.5, Color.AQUAMARINE)
+		#DebugDraw3D.draw_box(target)
 	
 	# DebugDraw.draw_grid(Vector3.ZERO, Vector3.UP * size, Vector3.BACK * size, Vector2(sub_divisions, sub_divisions), Color.aquamarine)
 	# DebugDraw.draw_grid(Vector3.ZERO, Vector3.RIGHT* size, Vector3.BACK * size, Vector2(sub_divisions, sub_divisions), Color.AQUAMARINE)
@@ -50,8 +69,8 @@ func _process(delta):
 	
 	g.frame_time_mode = false
 	
-	if Input.is_action_just_pressed("Esc"):
-		get_tree().quit()
+	
+
 
 func _create_graph(title, is_fps, show_title, flags, parent := &"", parent_side := DebugDraw2DGraph.SIDE_BOTTOM, pos = DebugDraw2DGraph.POSITION_LEFT_BOTTOM, size := Vector2i(500, 500), font = null) -> DebugDraw2DGraph:
 	var graph := DebugDraw2D.get_graph(title)
