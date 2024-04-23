@@ -40,7 +40,7 @@ func _ready():
 		print("OpenXR not initialized, please check if your headset is connected")
 	get_window().set_current_screen(1)
 
-	 # get_window().set_current_screen(1)
+	# get_window().set_current_screen(1)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -49,6 +49,9 @@ func _process(delta):
 	var g = _create_graph(&"FPS", true, false, DebugDraw2DGraph.TEXT_CURRENT | DebugDraw2DGraph.TEXT_AVG | DebugDraw2DGraph.TEXT_MAX | DebugDraw2DGraph.TEXT_MIN, &"", DebugDraw2DGraph.SIDE_BOTTOM, DebugDraw2DGraph.POSITION_LEFT_TOP if Engine.is_editor_hint() else DebugDraw2DGraph.POSITION_RIGHT_TOP, Vector2i(500, 110), custom_font)
 	
 	g.frame_time_mode = false
+	
+	if Input.is_action_just_pressed("Esc"):
+		get_tree().quit()
 
 func _create_graph(title, is_fps, show_title, flags, parent := &"", parent_side := DebugDraw2DGraph.SIDE_BOTTOM, pos = DebugDraw2DGraph.POSITION_LEFT_BOTTOM, size := Vector2i(500, 500), font = null) -> DebugDraw2DGraph:
 	var graph := DebugDraw2D.get_graph(title)
